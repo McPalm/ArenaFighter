@@ -76,11 +76,13 @@ namespace ArenaFighter.Controller
                     if (pressed1)
                     {
                         state = COMBAT;
+                        Form.ClearLogs();
                         Career.StartFight();
                     }
                     else if (pressed2)
                     {
-                        // shrug
+                        new ScoreView().ShowCarieer(Career);
+                        state = GAME_OVER;
                     }
                     break;
                 case COMBAT:
@@ -90,7 +92,11 @@ namespace ArenaFighter.Controller
                         var desc = Career.battle.LastRoundDescription;
                         Form.Log(desc);
                         if (Career.battle.FightIsOver)
+                        {
                             state = Career.Player.Alive ? TOWN : GAME_OVER;
+                        }
+                        if (state == GAME_OVER)
+                            new ScoreView().ShowCarieer(Career);
 
                     }
                     break;

@@ -20,6 +20,10 @@ namespace ArenaFighter
             textLog.Text += text + "\n";
         }
 
+        public void ClearLogs()
+        {
+            textLog.Text = "";
+        }
 
         public Form1()
         {
