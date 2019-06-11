@@ -21,8 +21,13 @@ namespace ArenaFighter.Controller
 
         void Submit()
         {
-            onSubmit?.Invoke(textBox1.Text);
-            this.Close();
+            if (textBox1.TextLength > 1)
+            {
+                onSubmit?.Invoke(textBox1.Text);
+                this.Close();
+            }
+            else
+                label1.Text = "At least two characters long!";
         }
 
         private void Accept_Click(object sender, EventArgs e)
