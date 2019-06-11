@@ -44,6 +44,10 @@ namespace ArenaFighter.Combat
         string GenerateDescription()
         {
             // return $"{CharacterA.Strenght}+{RollA.Result}, {CharacterB.Strenght}+{RollB.Result}";
+            if (CharacterA.Dead)
+                return $"{CharacterB.Name} strike down {CharacterA.Name} and emerges victorous!";
+            if(CharacterB.Dead)
+                return $"{CharacterA.Name} strike down {CharacterB.Name} and emerges victorous!";
             if (damage == 0)
                 return $"{CharacterA.Name} and {CharacterB.Name} fight for positions but neither is able to land a strike";
             if (AWins)

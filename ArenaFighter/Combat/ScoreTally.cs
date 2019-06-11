@@ -14,7 +14,8 @@ namespace ArenaFighter.Combat
             var points = 0;
             foreach(Battle b in c.Battles)
             {
-                points += b.Enemy.MaxHealth + b.Enemy.Strenght;
+                if(b.Enemy.Dead)
+                    points += b.Enemy.MaxHealth + b.Enemy.Strenght;
             }
             if (c.Player.Alive)
                 points += c.Battles.Count;

@@ -38,10 +38,17 @@ namespace ArenaFighter
         public void FormatLabels(Character player, Character enemy)
         {
             if (enemy == null)
+            {
                 enemyLabel.Text = "";
+                EnemyStrenght.Text = "";
+            }
             else
+            {
                 enemyLabel.Text = $"{enemy.Name} {enemy.Health}/{enemy.MaxHealth}";
+                EnemyStrenght.Text = $"Strenght {enemy.Strenght}";
+            }
             playerLabel.Text = $"{player.Name} {player.Health}/{player.MaxHealth}";
+            playerStrenght.Text = $"Strenght {player.Strenght}";
         }
     }
 }
