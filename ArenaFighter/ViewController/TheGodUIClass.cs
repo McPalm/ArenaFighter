@@ -13,120 +13,52 @@ namespace ArenaFighter.Controller
     /// </summary>
     public class TheGodUIClass
     {
-        public Career Career { get; set; }
         Form1 Form { get; }
+        GameManager GameManager { get; set; }
 
-        bool pressed1;
-        bool pressed2;
 
         public TheGodUIClass( Form1 form)
         {
             Form = form;
+            GameManager = new GameManager();
+            GameManager.Log += form.Log;
+            GameManager.Quit += form.Close;
+            GameManager.RequestString += RequestName;
+            GameManager.OnEndCareer += EndCareer;
+            GameManager.ClearLogs += form.ClearLogs;
             Form.button1.Click += (o, e) => Press1();
             Form.button2.Click += (o, e) => Press2();
-            Career = new Career();
             Display();
+        }
+
+        void EndCareer(Career c)
+        {
+            new ScoreView().ShowCarieer(c);
         }
 
         void Display()
         {
-            Form.FormatLabels(Career.Player, Career.Enemy);
-            switch(state)
-            {
-                case  TOWN:
-                    Form.button1.Text = "Start a fight";
-                    Form.button2.Text = "Retire";
-                    break;
-                case COMBAT:
-                    Form.button1.Text = "Attack!";
-                    Form.button2.Text = "";
-                    break;
-                case NOTHING:
-                case GAME_OVER:
-                    Form.button1.Text = "New Character";
-                    Form.button2.Text = "Quit";
-                    break;
-
-            }
+            Form.button1.Text = GameManager.Label1;
+            Form.button2.Text = GameManager.Label2;
+            Form.FormatLabels(GameManager.Player, GameManager.Enemy);
         }
 
         void Press1()
         {
-            pressed1 = true;
-            GameLoop();
+            GameManager.Action1();
+            Display();
         }
 
         void Press2()
         {
-            pressed2 = true;
-            GameLoop();
+            GameManager.Action2();
+            Display();
         }
 
-        const int COMBAT = 0;
-        const int TOWN = 1;
-        const int GAME_OVER = 2;
-        const int NOTHING = 3;
-        int state = NOTHING;
-
-        public void GameLoop()
+        void RequestName(string label, Action<string> action)
         {
-            switch (state)
-            {
-                case TOWN:
-                    if (pressed1)
-                    {
-                        state = COMBAT;
-                        Form.ClearLogs();
-                        Career.StartFight();
-                    }
-                    else if (pressed2)
-                    {
-                        new ScoreView().ShowCarieer(Career);
-                        state = GAME_OVER;
-                    }
-                    break;
-                case COMBAT:
-                    if (pressed1)
-                    {
-                        Career.battle.SimulateRound();
-                        var desc = Career.battle.LastRoundDescription;
-                        Form.Log(desc);
-                        if (Career.battle.FightIsOver)
-                        {
-                            state = Career.Player.Alive ? TOWN : GAME_OVER;
-                        }
-                        if (state == GAME_OVER)
-                            new ScoreView().ShowCarieer(Career);
-
-                    }
-                    break;
-                case GAME_OVER:
-                case NOTHING:
-                    if (pressed1)
-                    {
-                        var query = new NameQuerry();
-                        query.onSubmit += (name) =>
-                        {
-                            Career = new Career(new Character(name)
-                            {
-                                Strenght = 6,
-                                MaxHealth = 10,
-                            });
-                            state = TOWN;
-                            Display();
-                        };
-                        query.Show();
-                    }
-                    if (pressed2)
-                    {
-                        Form.Close();
-                    }
-                    break;
-            }
-            Display();
-            pressed1 = false;
-            pressed2 = false;
-
+            action += (s) => Display();
+            new NameQuerry().ShowQuestion(label, action);
         }
     }
 }

@@ -19,6 +19,14 @@ namespace ArenaFighter.Controller
             InitializeComponent();
         }
 
+        public NameQuerry ShowQuestion(string label, Action<string> submit)
+        {
+            label1.Text = label;
+            onSubmit = submit;
+            Show();
+            return this;
+        }
+
         void Submit()
         {
             if (textBox1.TextLength > 1)

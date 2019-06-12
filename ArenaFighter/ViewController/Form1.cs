@@ -47,8 +47,16 @@ namespace ArenaFighter
                 enemyLabel.Text = $"{enemy.Name} {enemy.Health}/{enemy.MaxHealth}";
                 EnemyStrenght.Text = $"Strenght {enemy.Strenght}";
             }
-            playerLabel.Text = $"{player.Name} {player.Health}/{player.MaxHealth}";
-            playerStrenght.Text = $"Strenght {player.Strenght}";
+            if (player == null)
+            {
+                playerLabel.Text = "";
+                playerStrenght.Text = "";
+            }
+            else
+            {
+                playerLabel.Text = $"{player.Name} {player.Health}/{player.MaxHealth}";
+                playerStrenght.Text = $"Strenght {player.Strenght}";
+            }
         }
     }
 }

@@ -53,6 +53,11 @@
     <Compile Include="Combat\Character.cs" />
     <Compile Include="Combat\Dice.cs" />
     <Compile Include="Combat\Career.cs" />
+    <Compile Include="Combat\GameManager.cs" />
+    <Compile Include="Combat\GameStates\Fight.cs" />
+    <Compile Include="Combat\GameStates\GameOver.cs" />
+    <Compile Include="Combat\GameStates\IGameState.cs" />
+    <Compile Include="Combat\GameStates\Town.cs" />
     <Compile Include="Combat\MyMath.cs" />
     <Compile Include="Combat\Options.cs" />
     <Compile Include="Combat\Round.cs" />
