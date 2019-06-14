@@ -61,6 +61,7 @@
     <Compile Include="Combat\MyMath.cs" />
     <Compile Include="Combat\Options.cs" />
     <Compile Include="Combat\Round.cs" />
+    <Compile Include="Combat\RPG\CharacterBuilder.cs" />
     <Compile Include="Combat\ScoreTally.cs" />
     <Compile Include="ViewController\CareerBrowser.cs">
       <SubType>Form</SubType>

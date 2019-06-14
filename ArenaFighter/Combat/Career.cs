@@ -1,4 +1,4 @@
-﻿using Lexicon.CSharp.InfoGenerator;
+﻿using ArenaFighter.Combat.RPG;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,6 @@ namespace ArenaFighter.Combat
         public Character Player { get; }
         public Character Enemy => battle?.Enemy;
         public Battle battle;
-        public InfoGenerator InfoGenerator { get; }
         public List<Battle> Battles { get; } = new List<Battle>();
 
         public Action<Options> OnChange { get; set; }
@@ -21,13 +20,11 @@ namespace ArenaFighter.Combat
         {
             if(player == null)
             {
-                player = new Character("Rocky")
-                {
-                    Strenght = 6,
-                    MaxHealth = 10,
-                };
+                player = new CharacterBuilder()
+                    .Name.IsRandom()
+                    .Attributes.StrenghtIs(6)
+                    .MaxHealthIs(10);
             }
-            InfoGenerator = new InfoGenerator(DateTime.Now.Millisecond);
             Player = player;
         }
 
@@ -40,12 +37,10 @@ namespace ArenaFighter.Combat
 
         Character RandomEnemy()
         {
-            var name = InfoGenerator.NextFullName();
-            return new Character(name)
-            {
-                MaxHealth = Dice.Roll().Result + 3,
-                Strenght = Dice.Roll().Result / 2 + 3,
-            };
+            return new CharacterBuilder()
+                .Name.IsRandom()
+                .Attributes.StrenghtIs(Dice.Roll().Result / 2 + 3)
+                .MaxHealthIs(Dice.Roll().Result + 3);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArenaFighter.Combat.RPG;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,10 @@ namespace ArenaFighter.Combat.GameStates
         }
         void EnterName(string name)
         {
-            var player = new Character(name)
-            {
-                Strenght = 6,
-                MaxHealth = 10,
-            };
+            var player = new CharacterBuilder()
+                .Name.Is(name)
+                .Attributes.StrenghtIs(6)
+                .Attributes.MaxHealthIs(10);
             var career = new Career(player);
             GameManager.Career = career;
             GameManager.EnterState(new Town(GameManager));
