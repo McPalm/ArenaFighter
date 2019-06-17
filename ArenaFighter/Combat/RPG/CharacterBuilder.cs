@@ -10,16 +10,8 @@ namespace ArenaFighter.Combat.RPG
 
     public class CharacterBuilder
     {
-        static private InfoGenerator _gen;
-        static protected InfoGenerator Generator
-        {
-            get
-            {
-                if (_gen == null)
-                    _gen = new InfoGenerator(DateTime.Now.Millisecond);
-                return _gen;
-            }
-        }
+        private static readonly Lazy<InfoGenerator> _gen = new Lazy<InfoGenerator>(() => new InfoGenerator(DateTime.Now.Millisecond));
+        static protected InfoGenerator Generator => _gen.Value;
 
         protected CharacterData data = new CharacterData();
 
